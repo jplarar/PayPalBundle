@@ -1,0 +1,38 @@
+{
+    "name": "jplarar/paypal-bundle",
+    "description": "A simple Symfony 3 bundle for the API for PayPal.",
+    "type": "symfony-bundle",
+    "keywords": [
+        "jplarar",
+        "paypal",
+        "symfony"
+    ],
+    "homepage": "https://github.com/jplarar/PayPalBundle",
+    "license": "MIT",
+    "authors": [
+      {
+        "name": "Juan Paulo Lara",
+        "email": "jplarar@gmail.com",
+        "role": "developer"
+      }
+    ],
+    "require": {
+      "php": ">=5.6",
+      "symfony/config": "^3.0",
+      "symfony/dependency-injection": "^2.0 || ^3.0",
+      "symfony/framework-bundle": "^2.0 || ^3.0",
+      "symfony/http-foundation": "^2.0 || ^3.0",
+      "symfony/http-kernel": "^2.0 || ^3.0",
+      "symfony/options-resolver": "^2.0 || ^3.0",
+      "symfony/validator": "^2.0 || ^3.0",
+      "paypal/rest-api-sdk-php": "^1.14.0"
+    },
+    "suggest": {
+    },
+    "require-dev": {
+    },
+    "autoload": {
+      "psr-0": { "Jplarar\\PayPalBundle": "" }
+    },
+    "target-dir": "Jplarar/PayPalBundle"
+}
