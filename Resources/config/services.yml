@@ -1,0 +1,11 @@
+parameters:
+     paypal_client.class: Jplarar\PayPalBundle\Services\PayPalClient
+
+services:
+     Jplarar\PayPalBundle\Services\PayPalClient: "@paypal_client"
+     paypal_client:
+         class:     %paypal_client.class%
+         arguments: [%paypal_client_id%, %paypal_client_secret%, %paypal_redirect_success%, %paypal_redirect_error%]
+         autowire: true
+
+
