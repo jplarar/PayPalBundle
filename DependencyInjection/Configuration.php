@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('paypal_client_secret')->defaultValue(null)->end()
             ->scalarNode('paypal_redirect_success')->defaultValue(null)->end()
             ->scalarNode('paypal_redirect_error')->defaultValue(null)->end()
+            ->scalarNode('paypal_env')->defaultValue(null)->end()
             ->end();
 
         return $treeBuilder;

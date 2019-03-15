@@ -27,8 +27,9 @@ class PayPalClient
      * @param string $paypal_client_secret
      * @param string $paypal_redirect_success
      * @param string $paypal_redirect_error
+     * @param string $paypal_env
      */
-    public function __construct($paypal_client_id = "", $paypal_client_secret = "", $paypal_redirect_success = "", $paypal_redirect_error = "")
+    public function __construct($paypal_client_id = "", $paypal_client_secret = "", $paypal_redirect_success = "", $paypal_redirect_error = "", $paypal_env = 'sandbox')
     {
         $this->apiContext = new \PayPal\Rest\ApiContext(
             new \PayPal\Auth\OAuthTokenCredential(
@@ -36,6 +37,10 @@ class PayPalClient
                 $paypal_client_secret
             )
         );
+
+        $this->apiContext->setConfig([
+            'mode' => $paypal_env
+        ]);
 
         $this->paypal_redirect_success = $paypal_redirect_success;
         $this->paypal_redirect_error = $paypal_redirect_error;
