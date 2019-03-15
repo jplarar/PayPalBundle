@@ -29,7 +29,8 @@ class JplararPayPalExtension extends Extension
             'paypal_client_id',
             'paypal_client_secret',
             'paypal_redirect_success',
-            'paypal_redirect_error'
+            'paypal_redirect_error',
+            'paypal_env'
         ];
 
         foreach ($parameters as $parameter) {
