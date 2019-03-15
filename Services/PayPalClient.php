@@ -7,8 +7,9 @@ use PayPal\Api\Payer;
 use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
-use PayPal\Api\ExecutePayment;
 use PayPal\Api\PaymentExecution;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
 
 /**
  * Class PayPalClient
@@ -52,6 +53,15 @@ class PayPalClient
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
 
+        $item1 = new Item();
+        $item1->setName($description)
+            ->setCurrency($currency)
+            ->setQuantity(1)
+            ->setPrice($paymentAmount);
+
+        $itemList = new ItemList();
+        $itemList->setItems(array($item1));
+
         // Set redirect URLs
         $redirectUrls = new RedirectUrls();
         $redirectUrls->setReturnUrl($this->paypal_redirect_success)->setCancelUrl($this->paypal_redirect_error);
@@ -62,7 +72,7 @@ class PayPalClient
 
         // Set transaction object
         $transaction = new Transaction();
-        $transaction->setAmount($amount)->setDescription($description);
+        $transaction->setAmount($amount)->setItemList($itemList)->setDescription($description);
 
         // Create the full payment object
         $payment = new Payment();
