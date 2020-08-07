@@ -10,6 +10,7 @@ use PayPal\Api\Transaction;
 use PayPal\Api\PaymentExecution;
 use PayPal\Api\Item;
 use PayPal\Api\ItemList;
+use PayPal\Api\Refund;
 
 /**
  * Class PayPalClient
@@ -97,7 +98,7 @@ class PayPalClient
     /**
      * @param $paymentId
      * @param $payerId
-     * @return Payment
+     * @return Payment|string
      */
     public function executePayment($paymentId, $payerId)
     {
@@ -110,10 +111,49 @@ class PayPalClient
             // Execute payment
             $result = $payment->execute($execution, $this->apiContext);
         } catch (\Exception $e) {
-            die($e->getMessage());
+            return $e->getMessage();
         }
 
         return $result;
+    }
+
+    /**
+     * @param $paymentId
+     * @return Refund|string
+     */
+    public function createRefund($paymentId)
+    {
+        // Get payment object by passing paymentId
+        $payment = Payment::get($paymentId, $this->apiContext);
+
+        $total = $payment->getTransactions()[0]->getAmount()->getTotal();
+        $currency =$payment->getTransactions()[0]->getAmount()->getCurrency();
+
+        $transactions = $payment->getTransactions();
+        if(empty($transactions[0])){
+            return false;
+        }
+
+        $relatedResources = $transactions[0]->getRelatedResources();
+        if(empty($relatedResources[0])){
+            return false;
+        }
+        $sale = $relatedResources[0]->getSale();
+
+        $refund = new Refund();
+        $amt = (new Amount())->setTotal($total)->setCurrency($currency);
+        $refund->setAmount($amt);
+        $refund->setReason('Sale refund');
+
+        try {
+            // Execute refund
+            $refundedSale = $sale->refund($refund, $this->apiContext);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return ($refundedSale);
+
     }
 
 }
